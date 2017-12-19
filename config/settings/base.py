@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import environ
 
-ROOT_DIR = environ.Path(__file__) - 3  # (photo_uploader/config/settings/base.py - 3 = photo_uploader/)
-APPS_DIR = ROOT_DIR.path('photo_uploader')
+ROOT_DIR = environ.Path(__file__) - 3  # (citsci_platform/config/settings/base.py - 3 = citsci_platform/)
+APPS_DIR = ROOT_DIR.path('citsci_platform')
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -54,12 +54,12 @@ THIRD_PARTY_APPS = [
 # Apps specific for this project go here.
 LOCAL_APPS = [
     # custom users app
-    'photo_uploader.users.apps.UsersConfig',
+    'citsci_platform.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'photo_uploader.photos',
-    'photo_uploader.userprofiles',
-    'photo_uploader.templatetags',
-    'photo_uploader.projects',
+    'citsci_platform.userprofiles.templatetags',
+    'citsci_platform.photos',
+    'citsci_platform.userprofiles',
+    'citsci_platform.projects',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -80,7 +80,7 @@ MIDDLEWARE = [
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
-    'sites': 'photo_uploader.contrib.sites.migrations'
+    'sites': 'citsci_platform.contrib.sites.migrations'
 }
 
 # DEBUG
@@ -116,7 +116,7 @@ MANAGERS = ADMINS
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///photo_uploader'),
+    'default': env.db('DATABASE_URL', default='postgres:///citsci_platform'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 DEFAULT_INDEX_TABLESPACE = 'pg_default'
@@ -261,8 +261,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # to do change to mandatory
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
-ACCOUNT_ADAPTER = 'photo_uploader.users.adapters.AccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'photo_uploader.users.adapters.SocialAccountAdapter'
+ACCOUNT_ADAPTER = 'citsci_platform.users.adapters.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'citsci_platform.users.adapters.SocialAccountAdapter'
 
 # Custom user app defaults
 # Select the correct user model

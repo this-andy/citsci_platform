@@ -1,6 +1,6 @@
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
-from photo_uploader.userprofiles.models import UserProfile, NHSStaffProfile
+from citsci_platform.userprofiles.models import UserProfile, NHSStaffProfile
 
 register = template.Library()
 
