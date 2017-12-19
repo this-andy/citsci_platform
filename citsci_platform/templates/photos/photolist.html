@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <h1>Photo form!</h1>
+    <div>
+        <img src="{% static 'images/favicon.ico' %}" />
+    </div>
+    <div>
+        {% for photo in photos %}
+            <h3>{{ photo.name }}</h3>
+            <div>
+                <a href='/photos/item/{{ photo.slug }}'> {{ photo.name }}</a>
+            </div>
+            <p>Lat: {{ photo.latitude }}, Long: {{ photo.longitude }}</p>
+        {% endfor %}
+    </div>
+    <hr>
+    <div>
+        <a href="photo_edit.html"> Create New Photo Details</a>
+    </div>
+ {% endblock content %}

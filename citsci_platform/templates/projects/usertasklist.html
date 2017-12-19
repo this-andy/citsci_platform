@@ -1,0 +1,8 @@
+<h3>Project Tasks</h3>
+{% if usertasks %}
+  {% for ut in usertasks %}
+    <p>Task: {{ ut.short_name }}</p>
+  {% endfor %}
+{% else %}
+  <p>None</p>
+{% endif %}

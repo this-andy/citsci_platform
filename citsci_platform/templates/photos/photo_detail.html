@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <h1>Photo detail!</h1>
+    <div>
+        {% if photo %}
+            <h3>{{ photo.name }}</h3>
+            <p>Lat: {{ photo.latitude }}, Long: {{ photo.longitude }}</p>
+        {% endif %}
+    </div>
+ {% endblock content %}
