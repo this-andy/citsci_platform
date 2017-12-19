@@ -1,14 +1,17 @@
 from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
+import uuid
+
 from PIL import Image
-from citsci_platform.photos.exif_pil import get_clean_gps_info_from_image
+from .exif_pil import get_clean_gps_info_from_image
+from ..models import TimeStampedModel
 
 # Create your models here.
 
-class Photo(models.Model):
+class Photo(TimeStampedModel):
     name = models.CharField(max_length=100)
-    date_created = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
+    taken_on = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
     location_name = models.CharField(max_length=255, null=True)

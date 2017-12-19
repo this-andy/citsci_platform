@@ -2,8 +2,10 @@ from django.db import models
 from django.conf import settings
 import uuid
 
+from ..models import TimeStampedModel
+
 # Create your models here.
-class UserProfile(models.Model):
+class UserProfile(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     mobile_phone = models.CharField(max_length=20, null=True)
@@ -12,9 +14,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-class NHSStaffProfile(models.Model):
-    nhs_profile_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
+class NHSStaffProfile(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     nhs_id = models.CharField(max_length=20)

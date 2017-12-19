@@ -2,27 +2,39 @@ from django.db import models
 from django.conf import settings
 import uuid
 
+from ..models import TimeStampedModel
+
+
+def get_display_name(self):
+    short_name_length = self.__class__._meta.get_field('short_name').max_length
+    if self.short_name == '':
+        if len(self.name) > short_name_length:
+            return self.name[:short_name_length - 2] + '...'
+        else:
+            return self.name
+    else:
+        return self.short_name
+
+
 # Create your models here.
-class Project(models.Model):
-    project_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class Project(TimeStampedModel):
     name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=20)
+    short_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return self.short_name
+        return get_display_name(self)
 
 
-class TaskType(models.Model):
-    task_type_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+class TaskType(TimeStampedModel):
     name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=20)
+    short_name = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return self.short_name
+        return get_display_name(self)
 
 
-class Task(models.Model):
-    task_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class Task(TimeStampedModel):
     project = models.ForeignKey(Project)
     task_type = models.ForeignKey(TaskType)
     description = models.CharField(max_length=500, default='')
@@ -39,8 +51,7 @@ class Task(models.Model):
         return self.short_name
 
 
-class UserTask(models.Model):
-    user_task_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class UserTask(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     task = models.ForeignKey(Task)
 

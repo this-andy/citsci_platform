@@ -7,33 +7,58 @@ django.setup()
 
 from citsci_platform.projects.models import Project, TaskType, Task, UserTask
 
+projects = [
+    {'name': 'CTG Monitoring', 'short_name': 'CTG Monitoring'},
+    {'name': 'Ambulance equipment', 'short_name': 'Ambulance equipment'},
+]
+
+tasktypes = [
+    {'name': 'Systematic review', 'short_name': 'Systematic review'},
+    {'name': 'Skills assessment', 'short_name': 'Skills assessment'},
+    {'name': 'Photo upload', 'short_name': 'Photo upload'},
+]
+
+projecttasks =[
+    {'desc': 'Systematic review for CTG monitoring', 'project_id': 0, 'task_type_id':0},
+    {'desc': 'Midwife assessment for CTG monitoring', 'project_id': 0, 'task_type_id': 1},
+    {'desc': 'Photos of ambulance equipment', 'project_id': 1, 'task_type_id': 2},
+]
+
 def populate_projects():
-    proj1 = Project.objects.get_or_create(name='CTG Monitoring', short_name='CTG Monitoring')
-    proj1[0].save()
-    proj2 = Project.objects.get_or_create(name='Ambulance equipment', short_name='Ambulance equipment')
-    proj2[0].save()
-    return [proj1[0].project_id, proj2[0].project_id]
+    ids = []
+    for data in projects:
+        result = Project.objects.get_or_create(name=data['name'], short_name=data['short_name'])
+        obj = result[0]
+        obj.save()
+        ids.append(obj.id)
+
+    return ids
 
 
 def populate_tasktypes():
-    tt1 = TaskType.objects.get_or_create(name='Systematic review', short_name='Systematic review')
-    tt1[0].save()
-    tt2 = TaskType.objects.get_or_create(name='Skills assessment', short_name='Skills assessment')
-    tt2[0].save()
-    tt3 = TaskType.objects.get_or_create(name='Photo upload', short_name='Photo upload')
-    tt3[0].save()
-    return [tt1[0].task_type_id, tt2[0].task_type_id, tt3[0].task_type_id]
+    ids = []
+    for data in tasktypes:
+        result = TaskType.objects.get_or_create(name=data['name'], short_name=data['short_name'])
+        obj = result[0]
+        obj.save()
+        ids.append(obj.id)
+
+    return ids
+
 
 def populate_project_tasks(project_ids, tasktype_ids):
-    desc = 'Systematic review for CTG monitoring'
-    pt = Task.objects.get_or_create(project_id=project_ids[0], task_type_id=tasktype_ids[0], description=desc)
-    pt[0].save()
-    desc = 'Midwife assessment for CTG monitoring'
-    pt = Task.objects.get_or_create(project_id=project_ids[0], task_type_id=tasktype_ids[1], description=desc)
-    pt[0].save()
-    desc = 'Photos of ambulance equipment'
-    pt = Task.objects.get_or_create(project_id=project_ids[1], task_type_id=tasktype_ids[2], description=desc)
-    pt[0].save()
+    ids = []
+    for data in projecttasks:
+        result = Task.objects.get_or_create(description=data['desc'],
+                                                project_id=project_ids[data['project_id']],
+                                                task_type_id=tasktype_ids[data['task_type_id']],
+                                                )
+        obj = result[0]
+        obj.save()
+        ids.append(obj.id)
+
+    return ids
+
 
 if __name__ =='__main__':
     project_ids = populate_projects()
