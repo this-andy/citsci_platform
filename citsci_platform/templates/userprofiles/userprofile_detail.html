@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if userprofile %}
+  <p>Mobile phone: {{ userprofile.mobile_phone }}</p>
+{% else %}
+  <p>No user profile</p>
+{%  endif %}
+</body>
+</html>

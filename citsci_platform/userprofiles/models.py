@@ -7,7 +7,7 @@ from ..models import TimeStampedModel
 # Create your models here.
 class UserProfile(TimeStampedModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-
+    nhs_staff = models.NullBooleanField(default=None)
     mobile_phone = models.CharField(max_length=20, null=True)
 
     def __str__(self):
