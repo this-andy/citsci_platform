@@ -11,21 +11,24 @@ from ..models import TimeStampedModel
 
 class Photo(TimeStampedModel):
     name = models.CharField(max_length=100)
-    taken_on = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
-    latitude = models.FloatField(null=True)
-    longitude = models.FloatField(null=True)
-    location_name = models.CharField(max_length=255, null=True)
-    taken_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="picture_taken_by", null=True)
-    file_location = models.CharField(max_length=1000, null=True)
-    slug = models.SlugField(null=True)
+    taken_on = models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    location_name = models.CharField(max_length=255, null=True, blank=True)
+    taken_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="picture_taken_by", null=True, blank=True)
+    file_location = models.CharField(max_length=1000, null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True)
     image = models.ImageField(upload_to='uploads', blank=True, null=True)
+
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.slug = slugify(self.name)
         super(Photo, self).save(force_insert, force_update, using, update_fields)
 
+
     class Meta:
         db_tablespace = "pg_default"
+
 
     def __str__(self):
         return '{0}, {1}, {2}'.format(self.name, self.location_name, self.date_created)

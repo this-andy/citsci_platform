@@ -39,6 +39,7 @@ def photo_edit(request):
         if form.is_valid():
             photo = form.save(commit=False)
             if 'image' in request.FILES:
+                print('image detected')
                 photo.image = request.FILES['image']
             photo.save()
             print('form saved')
