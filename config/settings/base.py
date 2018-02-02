@@ -60,6 +60,7 @@ LOCAL_APPS = [
     'citsci_platform.photos',
     'citsci_platform.userprofiles',
     'citsci_platform.projects',
+    'citsci_platform.ctg_assessment',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -117,9 +118,12 @@ MANAGERS = ADMINS
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
 DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres:///citsci_platform'),
+    'ctg_db': env.db('DATABASE_URL', default='postgres:///citsci_ctg'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 DEFAULT_INDEX_TABLESPACE = 'pg_default'
+# DATABASE_ROUTERS=[str(APPS_DIR.path('ctg_assessment.ctg_database_router'))]
+DATABASE_ROUTERS=['citsci_platform.ctg_assessment.ctg_database_router.CTGRouter']
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
