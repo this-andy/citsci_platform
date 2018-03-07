@@ -13,6 +13,7 @@
                 <a href='/photos/item/{{ photo.slug }}'> {{ photo.name }}</a>
             </div>
             <p>Lat: {{ photo.latitude }}, Long: {{ photo.longitude }}</p>
+            <p>Taken by: {{ photo.taken_by_name }}</p>
         {% endfor %}
     </div>
     <hr>

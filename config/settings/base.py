@@ -119,11 +119,15 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres:///citsci_platform'),
     'ctg_db': env.db('DATABASE_URL', default='postgres:///citsci_ctg'),
+    'photo_db': env.db('DATABASE_URL', default='postgres:///citsci_photo'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 DEFAULT_INDEX_TABLESPACE = 'pg_default'
 # DATABASE_ROUTERS=[str(APPS_DIR.path('ctg_assessment.ctg_database_router'))]
-DATABASE_ROUTERS=['citsci_platform.ctg_assessment.ctg_database_router.CTGRouter']
+DATABASE_ROUTERS=[
+    'citsci_platform.ctg_assessment.ctg_database_router.CTGRouter',
+    'citsci_platform.photos.database_router.DatabaseRouter',
+]
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------

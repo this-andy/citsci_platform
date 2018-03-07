@@ -51,13 +51,26 @@ class Task(TimeStampedModel):
         return self.short_name
 
 
-class UserTask(TimeStampedModel):
+class UserProject(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    project = models.ForeignKey(Project)
+
+    @property
+    def short_name(self):
+        return '-'.join([self.user.name,self.project.short_name])
+
+    def __str__(self):
+        return self.short_name
+
+
+class UserTask(TimeStampedModel):
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user_project = models.ForeignKey(UserProject)
     task = models.ForeignKey(Task)
 
     @property
     def short_name(self):
-        return '-'.join([self.user.name,self.task.short_name])
+        return '-'.join([self.user_project.short_name,self.task.short_name])
 
     def __str__(self):
         return self.short_name

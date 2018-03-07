@@ -12,4 +12,4 @@ class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         # fields = ('name', 'latitude', 'longitude', )
-        fields = ('name', 'image', 'latitude', 'longitude', )
+        fields = ('name', 'image', 'latitude', 'longitude', 'taken_by', )
