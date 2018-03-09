@@ -63,3 +63,4 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Your local stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', '0def73f7.ngrok.io']
