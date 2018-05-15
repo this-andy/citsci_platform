@@ -60,3 +60,7 @@ def photo_details(request, photo_slug):
         context['photo'] = None
 
     return render(request, 'photos/photo_detail.html', context)
+
+
+def photo_zoom(request):
+    return render(request, 'photos/photo_zoom.html')

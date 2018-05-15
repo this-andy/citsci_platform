@@ -19,6 +19,8 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^photos/', include('citsci_platform.photos.urls')),
     url(r'^userprofiles/', include('citsci_platform.userprofiles.urls')),
+    url(r'^api/', include('citsci_platform.api_v1.urls')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

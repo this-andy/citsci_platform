@@ -6,7 +6,7 @@ wheel==0.30.0
 
 
 # Bleeding edge Django
-django==1.10.8 # pyup: >=1.10,<1.11
+django==1.11 # pyup: >=1.11
 
 # Configuration
 django-environ==0.4.4
@@ -20,7 +20,7 @@ django-crispy-forms==1.7.0
 django-model-utils==3.0.0
 
 # Images
-Pillow==4.3.0
+Pillow==5.1.0
 
 # Password storage
 argon2-cffi==16.3.0
@@ -44,7 +44,9 @@ django-redis==4.8.0
 redis>=2.10.5
 
 
-
-
-
 # Your custom requirements go here
+# For Auth0
+djangorestframework-jwt
+cryptography
+pyjwt
+python-dotenv
