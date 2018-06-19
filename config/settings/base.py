@@ -125,11 +125,38 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
+# DATABASES = {
+#     'default': env.db('DATABASE_URL', default='postgres:///citsci_platform'),
+#     'ctg_db': env.db('DATABASE_URL', default='postgres:///citsci_ctg'),
+#     'photo_db': env.db('DATABASE_URL', default='postgres:///citsci_photo'),
+# }
+
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///citsci_platform'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'citsci_platform',
+        'HOST': 'this-citsci-dev.ckyo3e76m1dn.eu-west-2.rds.amazonaws.com',
+        'PORT': '5432',
+        'USER': 'this_admin',
+        'PASSWORD': '4F3exfhz-postgres'
+    },
     'ctg_db': env.db('DATABASE_URL', default='postgres:///citsci_ctg'),
     'photo_db': env.db('DATABASE_URL', default='postgres:///citsci_photo'),
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'citsci_platform',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#         'USER': 'amp205',
+#         'PASSWORD': '4F3exfhz'
+#     },
+#     'ctg_db': env.db('DATABASE_URL', default='postgres:///citsci_ctg'),
+#     'photo_db': env.db('DATABASE_URL', default='postgres:///citsci_photo'),
+# }
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 DEFAULT_INDEX_TABLESPACE = 'pg_default'
 # DATABASE_ROUTERS=[str(APPS_DIR.path('ctg_assessment.ctg_database_router'))]

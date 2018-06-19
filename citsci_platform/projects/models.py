@@ -19,10 +19,10 @@ def get_display_name(self):
 class Project(TimeStampedModel):
     name = models.CharField(max_length=50)
     short_name = models.CharField(max_length=20, blank=True)
+    status = models.CharField(max_length=12, blank=True, null=True)
 
     def __str__(self):
         return get_display_name(self)
-
 
 
 class TaskType(TimeStampedModel):
@@ -37,6 +37,7 @@ class Task(TimeStampedModel):
     project = models.ForeignKey(Project)
     task_type = models.ForeignKey(TaskType)
     description = models.CharField(max_length=500, default='')
+    status = models.CharField(max_length=12, blank=True, null=True)
 
     @property
     def short_name(self):
@@ -53,6 +54,7 @@ class Task(TimeStampedModel):
 class UserProject(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     project = models.ForeignKey(Project)
+    status = models.CharField(max_length=12, blank=True, null=True)
 
     @property
     def short_name(self):
@@ -66,6 +68,8 @@ class UserTask(TimeStampedModel):
     # user = models.ForeignKey(settings.AUTH_USER_MODEL)
     user_project = models.ForeignKey(UserProject)
     task = models.ForeignKey(Task)
+    status = models.CharField(max_length=12, blank=True, null=True)
+    consented = models.DateTimeField(null=True)
 
     @property
     def short_name(self):
