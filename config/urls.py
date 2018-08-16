@@ -5,11 +5,14 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
+from citsci_platform.users import views
+
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^welcome/$', TemplateView.as_view(template_name='pages/welcome.html'), name='welcome'),
 
-    # Django Admin, use {% url 'admin:index' %}
+                  # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
 
     # User management
@@ -20,9 +23,11 @@ urlpatterns = [
     url(r'^photos/', include('citsci_platform.photos.urls')),
     url(r'^userprofiles/', include('citsci_platform.userprofiles.urls')),
     url(r'^api/', include('citsci_platform.api_v1.urls')),
+    url(r'^', include('django.contrib.auth.urls', namespace='auth')),
+    url(r'^', include('social_django.urls', namespace='social')),
+    url(r'^dashboard', views.dashboard),
 
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

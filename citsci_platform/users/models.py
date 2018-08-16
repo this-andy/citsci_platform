@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from uuid import uuid4
 
 
 @python_2_unicode_compatible
@@ -11,6 +12,7 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
+    uuid = models.UUIDField(blank=False, null=False, unique=True, default=uuid4, editable=False)
 
     def __str__(self):
         return self.username

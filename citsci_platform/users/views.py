@@ -1,8 +1,9 @@
 from django.urls import reverse
+from django.shortcuts import render
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
-
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.decorators import login_required
+import json
 from .models import User
 
 
@@ -43,3 +44,23 @@ class UserListView(LoginRequiredMixin, ListView):
     # These next two lines tell the view to index lookups by username
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+
+def index(request):
+    return render(request, 'users/index.html')
+
+
+@login_required
+def dashboard(request):
+    user = request.user
+    auth0user = user.social_auth.get(provider="auth0")
+    userdata = {
+        'user_id': auth0user.uid,
+        'name': user.first_name,
+        'picture': auth0user.extra_data['picture']
+    }
+
+    return render(request, 'users/dashboard.html', {
+        'auth0User': auth0user,
+        'userdata': json.dumps(userdata, indent=4)
+    })

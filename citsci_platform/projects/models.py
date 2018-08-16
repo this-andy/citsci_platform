@@ -58,7 +58,7 @@ class UserProject(TimeStampedModel):
 
     @property
     def short_name(self):
-        return '-'.join([self.user.name,self.project.short_name])
+        return '-'.join([self.user.name, self.project.short_name])
 
     def __str__(self):
         return self.short_name
@@ -74,6 +74,29 @@ class UserTask(TimeStampedModel):
     @property
     def short_name(self):
         return '-'.join([self.user_project.short_name,self.task.short_name])
+
+    def __str__(self):
+        return self.short_name
+
+
+class ExternalSystem(TimeStampedModel):
+    name = models.CharField(max_length=50)
+    short_name = models.CharField(max_length=20, blank=True)
+    external_user_id_type = models.CharField(max_length=10, blank=True, null=True) # uuid, integer, string
+
+    def __str__(self):
+        return get_display_name(self)
+
+
+class UserExternalAccount(TimeStampedModel):
+    external_system = models.ForeignKey(ExternalSystem)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    external_user_id = models.CharField(max_length=50)
+    status = models.CharField(max_length=12, blank=True, null=True)
+
+    @property
+    def short_name(self):
+        return '-'.join([self.external_system.short_name, self.user.name])
 
     def __str__(self):
         return self.short_name
