@@ -3,7 +3,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 import uuid
 from ..models import TimeStampedModel
-from ..projects.models import Project, Task
+from ..projects.models import Project, ProjectTask
 
 # Create your models here.
 

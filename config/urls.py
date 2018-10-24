@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^', include('django.contrib.auth.urls', namespace='auth')),
     url(r'^', include('social_django.urls', namespace='social')),
     url(r'^dashboard', views.dashboard),
+    url(r'^hubspot/', include('citsci_platform.hubspot.urls')),
 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -358,6 +358,8 @@ pip-selfcheck.json
 mailhog
 
 
+citsci_platform/.idea/
 citsci_platform/media/
+citsci_platform/hubspot/
 
 

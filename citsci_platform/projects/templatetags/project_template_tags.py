@@ -1,6 +1,6 @@
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
-from citsci_platform.projects.models import Project, UserTask, Task, TaskType
+from citsci_platform.projects.models import UserTask
 
 register = template.Library()
 

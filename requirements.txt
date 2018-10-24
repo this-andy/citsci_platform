@@ -1,0 +1,4 @@
+Django==1.11
+environ==1.0
+factory==1.2
+raven==6.7.0
