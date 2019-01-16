@@ -41,6 +41,16 @@ class UserGroup(TimeStampedModel):
         return get_display_name(self)
 
 
+class ExternalSystem(TimeStampedModel):
+    name = models.CharField(max_length=50)
+    short_name = models.CharField(max_length=20, blank=True)
+    external_user_id_type = models.CharField(max_length=10, blank=True, null=True)  # uuid, integer, string
+
+
+    def __str__(self):
+        return get_display_name(self)
+
+
 class Project(TimeStampedModel):
     STATUS_CHOICES = (
         ('planned', 'Planned'),
@@ -96,6 +106,8 @@ class ProjectTask(TimeStampedModel):
     visibility = models.CharField(max_length=12, choices=VISIBILITY_CHOICES)
     website_highlight = models.BooleanField(default=False)
     testing_group = models.ForeignKey(UserGroup, null=True, blank=True)
+    external_system = models.ForeignKey(ExternalSystem, null=True, blank=True)
+    external_task_id = models.CharField(max_length=50, null=True, blank=True)
     status = models.CharField(max_length=12, choices=STATUS_CHOICES)
 
     @property
@@ -111,10 +123,14 @@ class ProjectTask(TimeStampedModel):
 
 
 class UserProject(TimeStampedModel):
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    STATUS_CHOICES = (
+        ('active', 'Active'),
+        ('complete', 'Complete'),
+        ('withdrawn', 'Withdrawn')
+    )
     user = models.ForeignKey(User)
     project = models.ForeignKey(Project)
-    status = models.CharField(max_length=12, blank=True, null=True)
+    status = models.CharField(max_length=12, blank=True, null=True, choices=STATUS_CHOICES)
 
     @property
     def short_name(self):
@@ -127,7 +143,8 @@ class UserProject(TimeStampedModel):
 class UserTask(TimeStampedModel):
     STATUS_CHOICES = (
         ('active', 'Active'),
-        ('complete', 'Complete')
+        ('complete', 'Complete'),
+        ('withdrawn', 'Withdrawn')
     )
     # user = models.ForeignKey(settings.AUTH_USER_MODEL)
     user_project = models.ForeignKey(UserProject)
@@ -144,20 +161,14 @@ class UserTask(TimeStampedModel):
         return self.short_name + ' {' + str(self.id) + '}'
 
 
-class ExternalSystem(TimeStampedModel):
-    name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=20, blank=True)
-    external_user_id_type = models.CharField(max_length=10, blank=True, null=True)  # uuid, integer, string
-
-    def __str__(self):
-        return get_display_name(self)
-
-
 class UserExternalAccount(TimeStampedModel):
+    STATUS_CHOICES = (
+        ('active', 'Active'),
+        ('closed', 'Closed')
+    )
     external_system = models.ForeignKey(ExternalSystem)
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL)
     user = models.ForeignKey(User)
-    external_user_id = models.CharField(max_length=50)
+    external_user_id = models.CharField(max_length=50, null=True, blank=True, choices=STATUS_CHOICES)
     status = models.CharField(max_length=12, blank=True, null=True)
 
     @property
